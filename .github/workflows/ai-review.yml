@@ -34,8 +34,8 @@ jobs:
           mode: gemini
           debug: true
           review_comment_lgtm: false
-          gemini_light_model: gemini-2.0-flash
-          gemini_heavy_model: gemini-2.0-flash
+          light_model: gemini-2.0-flash
+          heavy_model: gemini-2.0-flash
           path_filters: |
             !dist/**
             !**/*.lock

@@ -5,6 +5,10 @@ branding:
   color: 'blue'
 author: 'Phuong Vo'
 inputs:
+  mode:
+    required: true
+    description: 'The mode to use for the action "openai" or "gemini"'
+    default: 'gemini'
   debug:
     required: false
     description: 'Enable debug mode'
@@ -148,10 +152,6 @@ inputs:
     required: false
     description: 'The url of the openai api interface.'
     default: 'https://api.openai.com/v1'
-  mode:
-    required: false
-    description: 'The mode to use for the action "openai" or "gemini"'
-    default: 'openai'
   light_model:
     required: false
     description:
@@ -242,5 +242,5 @@ inputs:
     description: ISO code for the response language
     default: en-US
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

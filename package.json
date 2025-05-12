@@ -1,6 +1,6 @@
 {
-  "name": "tms-pr-reviewer",
-  "version": "0.0.0",
+  "name": "tms-ai-pr-reviewer",
+  "version": "1.0.1",
   "private": true,
   "description": "TMS-based PR Reviewer and Summarizer.",
   "main": "lib/main.js",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fluxninja/tms-pr-reviewer.git"
+    "url": "git@github.com:tms-phuongvo/tms-ai-pr-reviewer.git"
   },
   "keywords": [
     "actions",

@@ -30,10 +30,9 @@ configure the required environment variables, such as `GITHUB_TOKEN` and
 FAQs, you can refer to the sections below.
 
 - [Overview](#overview)
-- [Professional Version of CodeRabbit](#professional-version-of-coderabbit)
 - [Reviewer Features](#reviewer-features)
 - [Install instructions](#install-instructions)
-- [Conversation with CodeRabbit](#conversation-with-coderabbit)
+- [Conversation](#conversation)
 - [Examples](#examples)
 - [Contribute](#contribute)
 - [FAQs](#faqs)
@@ -119,10 +118,6 @@ system_message: |
   DevRel (developer relations) professional with focus on cloud-native
   infrastructure.
 
-  Company context -
-  CodeRabbit is an AI-powered Code reviewer.It boosts code quality and cuts manual effort. Offers context-aware, line-by-line feedback, highlights critical changes,
-  enables bot interaction, and lets you commit suggestions directly from GitHub.
-
   When reviewing or generating content focus on key areas such as -
   - Accuracy
   - Relevance
@@ -141,7 +136,7 @@ system_message: |
 
 </details>
 
-## Conversation with CodeRabbit
+## Conversation
 
 You can reply to a review comment made by this action and get a response based
 on the diff context. Additionally, you can invite the bot to a conversation by
