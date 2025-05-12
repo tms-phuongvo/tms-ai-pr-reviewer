@@ -430,7 +430,7 @@ ${filename}: ${summary}
     if (releaseNotesResponse === '') {
       info('release notes: nothing obtained from openai')
     } else {
-      let message = '### Summary by CodeRabbit\n\n'
+      let message = '### Summary by TMS Bot\n\n'
       message += releaseNotesResponse
       try {
         await commenter.updateDescription(
@@ -712,7 +712,7 @@ ${
 <details>
 <summary>Tips</summary>
 
-### Chat with <img src="https://avatars.githubusercontent.com/in/347564?s=41&u=fad245b8b4c7254fe63dd4dcd4d662ace122757e&v=4" alt="Image description" width="20" height="20">  CodeRabbit Bot (\`@tms-phuongvo\`)
+### Chat with <img src="https://avatars.githubusercontent.com/u/59599672?v=4" alt="Image description" width="20" height="20">  TMS Bot (\`@tms-phuongvo\`)
 - Reply on review comments left by this bot to ask follow-up questions. A review comment is a comment on a diff or a file.
 - Invite the bot into a review comment chain by tagging \`@tms-phuongvo\` in a reply.
 
