@@ -70,7 +70,7 @@ importers:
         specifier: ^4.6.1
         version: 4.10.2(eslint@8.57.1)(typescript@4.9.5)
       eslint-plugin-import:
-        specifier: ^2.27.5
+        specifier: ^2.31.0
         version: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@4.9.5))(eslint@8.57.1)
       eslint-plugin-jest:
         specifier: ^27.2.1
