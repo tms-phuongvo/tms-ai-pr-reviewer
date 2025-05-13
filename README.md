@@ -10,27 +10,51 @@
 
 ## Overview
 
-TMS-AI PR Reviewer is an AI-based code reviewer and summarizer for GitHub pull requests using OpenAI's `gpt-4o-mini`,`gpt-4o`,`gpt-4.1-mini`, `gpt-4.1` models, and Google's `gemini-1.5-flash`, `gemini-1.5-pro`, `gemini-2.0-flash` model. It is designed to be used as a GitHub Action and can be configured to run on every pull request and review comments.
+TMS-AI PR Reviewer is an AI-based code reviewer and summarizer for GitHub pull
+requests using OpenAI, Gemini and Anthropic. It is designed to be used as a
+GitHub Action and can be configured to run on every pull request and review
+comments.
+
+| LLM             | Light Model                            | Heavy Model                                            |
+| --------------- | -------------------------------------- | ------------------------------------------------------ |
+| OpenAI          | `gpt-4o-mini`,`gpt-4.1-mini`           | `gpt-4o`, `gpt-4.1`                                    |
+| Google (Gemini) | `gemini-1.5-flash`, `gemini-2.0-flash` | `gemini-1.5-pro`                                       |
+| Anthropic       | `claude-3-5-haiku-20241022`            | `claude-3-opus-20240229`, `claude-3-5-sonnet-20241022` |
 
 ## Reviewer Features:
 
-- **PR Summarization**: It generates a summary and release notes of the changes in the pull request.
-- **Line-by-line code change suggestions**: Reviews the changes line by line and provides code change suggestions.
-- **Continuous, incremental reviews**: Reviews are performed on each commit within a pull request, rather than a one-time review on the entire pull request.
-- **Cost-effective and reduced noise**: Incremental reviews save on API costs and reduce noise by tracking changed files between commits and the base of the pull request.
-- **Multiple LLM Support**: Supports both OpenAI (GPT-4o and GPT-4.1) and Google's Gemini Pro models for different review tasks.
-- **"Light" model for summary**: Designed to be used with a "light" summarization model (e.g. `gpt-4o-mini` or `gemini-flash`) and a "heavy" review model (e.g. `gpt-4o`, `gemini-pro`). _For best results, use `gpt-4o` as the "heavy" model, as thorough code review needs strong reasoning abilities._
-- **Chat with bot**: Supports conversation with the bot in the context of lines of code or entire files, useful for providing context, generating test cases, and reducing code complexity.
-- **Smart review skipping**: By default, skips in-depth review for simple changes (e.g. typo fixes) and when changes look good for the most part. It can be disabled by setting `review_simple_changes` and `review_comment_lgtm` to `true`.
-- **Customizable prompts**: Tailor the `system_message`, `summarize`, and `summarize_release_notes` prompts to focus on specific aspects of the review process or even change the review objective.
+- **PR Summarization**: It generates a summary and release notes of the changes
+  in the pull request.
+- **Line-by-line code change suggestions**: Reviews the changes line by line and
+  provides code change suggestions.
+- **Continuous, incremental reviews**: Reviews are performed on each commit
+  within a pull request, rather than a one-time review on the entire pull
+  request.
+- **Cost-effective and reduced noise**: Incremental reviews save on API costs
+  and reduce noise by tracking changed files between commits and the base of the
+  pull request.
+- **Multiple LLM Support**: Supports both OpenAI (GPT-4o and GPT-4.1) and
+  Google's Gemini Pro models for different review tasks.
+- **"Light" model for summary**: Designed to be used with a "light"
+  summarization model (e.g. `gpt-4o-mini` or `gemini-flash`) and a "heavy"
+  review model (e.g. `gpt-4o`, `gemini-pro`). _For best results, use `gpt-4o` as
+  the "heavy" model, as thorough code review needs strong reasoning abilities._
+- **Chat with bot**: Supports conversation with the bot in the context of lines
+  of code or entire files, useful for providing context, generating test cases,
+  and reducing code complexity.
+- **Smart review skipping**: By default, skips in-depth review for simple
+  changes (e.g. typo fixes) and when changes look good for the most part. It can
+  be disabled by setting `review_simple_changes` and `review_comment_lgtm` to
+  `true`.
+- **Customizable prompts**: Tailor the `system_message`, `summarize`, and
+  `summarize_release_notes` prompts to focus on specific aspects of the review
+  process or even change the review objective.
 
 To use this tool, you need to add the provided YAML file to your repository and
 configure the required environment variables, such as `GITHUB_TOKEN` and
-`OPENAI_API_KEY` or `GOOGLE_API_KEY`. For more information on usage, examples, contributing, and
-FAQs, you can refer to the sections below.
+`OPENAI_API_KEY`, `GOOGLE_API_KEY` or `ANTHROPIC_API_KEY` . For more information
+on usage, examples, contributing, and FAQs, you can refer to the sections below.
 
-- [Overview](#overview)
-- [Reviewer Features](#reviewer-features)
 - [Install instructions](#install-instructions)
 - [Conversation](#conversation)
 - [Examples](#examples)
@@ -65,12 +89,12 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: tms-phuongvo/ai-pr-reviwer@latest
+      - uses: tms-phuongvo/tms-ai-pr-reviewer@latest
         env:
-
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          // GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         with:
           mode: openai
           debug: false
@@ -79,27 +103,40 @@ jobs:
 ```
 
 #### Environment variables
+
 - `GITHUB_TOKEN`: This should already be available to the GitHub Action
   environment. This is used to add comments to the pull request.
-- `OPENAI_API_KEY`: Required for OpenAI API authentication. Get one [here](https://platform.openai.com/account/api-keys).
-- `OPENAI_API_ORG`: (optional) Use this to specify the organization with OpenAI API if you have multiple.
-- `GOOGLE_API_KEY`: Required for Gemini API authentication. Get one from [Google AI Studio](https://makersuite.google.com/app/apikey).
+- `OPENAI_API_KEY`: Required for OpenAI API authentication. Get one
+  [here](https://platform.openai.com/account/api-keys).
+- `GOOGLE_API_KEY`: Required for Gemini API authentication. Get one from
+  [Google AI Studio](https://makersuite.google.com/app/apikey).
+- `ANTHROPIC_API_KEY`: Required for Claude API authentication. Get one from
+  [Anthropic Console](https://console.anthropic.com/settings/keys).
 
-- `mode`: This is the environment for GitHub Actions to specify which AI model to use, e.g., `openai` or `gemini`
+- `mode`: This is the environment for GitHub Actions to specify which AI model
+  to use, e.g., `openai` or `gemini` or `anthropic`
 
 ### Models: OpenAI and Gemini
 
 The system supports multiple LLM models:
 
 - **OpenAI Models**:
-  - `gpt-4o-mini` or `gpt-4.1-mini`: Recommended for lighter tasks such as summarizing changes
+
+  - `gpt-4o-mini` or `gpt-4.1-mini`: Recommended for lighter tasks such as
+    summarizing changes
   - `gpt-4o` or `gpt-4.1`: Recommended for complex review and commenting tasks
 
 - **Google Gemini**:
-  - `gemini-1.5-flash` or `gemini-2.0-flash`: Recommended for lighter tasks such as summarizing changes
+
+  - `gemini-1.5-flash` or `gemini-2.0-flash`: Recommended for lighter tasks such
+    as summarizing changes
   - `gemini-1.5-pro`: Recommended for lighter tasks such as summarizing changes
 
-Costs: `gpt-4o-mini` or `gpt-4.1-mini` and `gemini-1.5-flash` or `gemini-2.0-flash` are cost-effective options. `gpt-4o` or `gpt-4.1` or `gemini-1.5-pro` is more expensive but provides superior results for complex code reviews.
+- **Anthropic**:
+  - `claude-3-5-haiku-20241022`: Recommended for lighter tasks such as
+    summarizing changes
+  - `claude-3-opus-20240229`, `claude-3-5-sonnet-20241022`: Recommended for
+    lighter tasks such as summarizing changes
 
 ### Prompts & Configuration
 
@@ -113,8 +150,7 @@ value. For example, to review docs/blog posts, you can use the following prompt:
 
 ```yaml
 system_message: |
-  You are TOMOSIA AI REVIEWER (aka `github-actions[bot]`), a language model
-  trained by OpenAI. Your purpose is to act as a highly experienced
+  You are AI REVIEWER (aka `github-actions[bot]`). Your purpose is to act as a highly experienced
   DevRel (developer relations) professional with focus on cloud-native
   infrastructure.
 
@@ -209,11 +245,10 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: tms-phuongvo/ai-pr-reviewer@latest
+      - uses: tms-phuongvo/tms-ai-pr-reviewer@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
         with:
           mode: openai
           debug: false
@@ -231,8 +266,12 @@ messages
 
 ### Disclaimer
 
-- Your code (files, diff, PR title/description) will be sent to OpenAI's and/or Google's servers for processing. Please check with your compliance team before using this on your private code repositories.
-- Both OpenAI and Google have their own data usage policies. Please review them before using this tool:
+- Your code (files, diff, PR title/description) will be sent to OpenAI's and/or
+  Google's and/or Anthropic servers for processing. Please check with your
+  compliance team before using this on your private code repositories.
+- Both OpenAI and Google have their own data usage policies. Please review them
+  before using this tool:
   - [OpenAI API Data Usage Policy](https://openai.com/policies/api-data-usage-policies)
   - [Google AI Data Usage Policy](https://ai.google.dev/terms)
-- This action is not affiliated with OpenAI or Google.
+  - [Anthropic Data Usage Policy](https://www.anthropic.com/legal/privacy)
+- This action is not affiliated with OpenAI or Google or Anthropic.
