@@ -5,8 +5,14 @@ import {
   setFailed,
   warning
 } from '@actions/core'
-import {OpenAIBot, IBot, GeminiAIBot} from './bot'
-import {OpenAIOptions, Options, Mode, GeminiAIOptions} from './options'
+import {OpenAIBot, IBot, GeminiAIBot, AnthropicAIBot} from './bot'
+import {
+  OpenAIOptions,
+  Options,
+  Mode,
+  GeminiAIOptions,
+  AnthropicAIOptions
+} from './options'
 import {Prompts} from './prompts'
 import {codeReview} from './review'
 import {handleReviewComment} from './review-comment'
@@ -29,7 +35,6 @@ async function run(): Promise<void> {
     getInput('timeout_ms'),
     getInput('concurrency_limit'),
     getInput('github_concurrency_limit'),
-    getInput('api_base_url'),
     getInput('language')
   )
 
@@ -55,6 +60,11 @@ async function run(): Promise<void> {
         options,
         new GeminiAIOptions(options.lightModel, options.lightTokenLimits)
       )
+    } else if (options.mode === 'anthropic') {
+      lightBot = new AnthropicAIBot(
+        options,
+        new AnthropicAIOptions(options.lightModel, options.lightTokenLimits)
+      )
     } else {
       throw new Error('Invalid mode')
     }
@@ -76,6 +86,11 @@ async function run(): Promise<void> {
       heavyBot = new GeminiAIBot(
         options,
         new GeminiAIOptions(options.heavyModel, options.heavyTokenLimits)
+      )
+    } else if (options.mode === 'anthropic') {
+      heavyBot = new AnthropicAIBot(
+        options,
+        new AnthropicAIOptions(options.heavyModel, options.heavyTokenLimits)
       )
     } else {
       throw new Error('Invalid mode')

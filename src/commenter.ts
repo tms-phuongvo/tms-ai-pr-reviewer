@@ -7,40 +7,40 @@ import {octokit} from './octokit'
 const context = github_context
 const repo = context.repo
 
-export const COMMENT_GREETING = `<img src="https://avatars.githubusercontent.com/u/59599672?v=4" alt="Image description" width="20" height="20">   TMS Bot`
+export const COMMENT_GREETING = `<img src="https://avatars.githubusercontent.com/u/59599672?s=96&v=4" alt="Image description" width="20" height="20"> @tms-phuongvo`
 
 export const COMMENT_TAG =
-  '<!-- This is an auto-generated comment by TMS Bot -->'
+  '<!-- This is an auto-generated comment by @tms-phuongvo -->'
 
 export const COMMENT_REPLY_TAG =
-  '<!-- This is an auto-generated reply by TMS Bot -->'
+  '<!-- This is an auto-generated reply by @tms-phuongvo -->'
 
 export const SUMMARIZE_TAG =
-  '<!-- This is an auto-generated comment: summarize by TMS Bot -->'
+  '<!-- This is an auto-generated comment: summarize by @tms-phuongvo -->'
 
 export const IN_PROGRESS_START_TAG =
-  '<!-- This is an auto-generated comment: summarize review in progress by TMS Bot -->'
+  '<!-- This is an auto-generated comment: summarize review in progress by @tms-phuongvo -->'
 
 export const IN_PROGRESS_END_TAG =
-  '<!-- end of auto-generated comment: summarize review in progress by TMS Bot -->'
+  '<!-- end of auto-generated comment: summarize review in progress by @tms-phuongvo -->'
 
 export const DESCRIPTION_START_TAG = `
-<!-- This is an auto-generated comment: release notes by TMS Bot -->`
+<!-- This is an auto-generated comment: release notes by @tms-phuongvo -->`
 export const DESCRIPTION_END_TAG =
-  '<!-- end of auto-generated comment: release notes by TMS Bot -->'
+  '<!-- end of auto-generated comment: release notes by @tms-phuongvo -->'
 
-export const RAW_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: raw summary by TMS Bot -->
+export const RAW_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: raw summary by @tms-phuongvo -->
 <!--
 `
 export const RAW_SUMMARY_END_TAG = `-->
-<!-- end of auto-generated comment: raw summary by TMS Bot -->`
+<!-- end of auto-generated comment: raw summary by @tms-phuongvo -->`
 
-export const SHORT_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: short summary by TMS Bot -->
+export const SHORT_SUMMARY_START_TAG = `<!-- This is an auto-generated comment: short summary by @tms-phuongvo -->
 <!--
 `
 
 export const SHORT_SUMMARY_END_TAG = `-->
-<!-- end of auto-generated comment: short summary by TMS Bot -->`
+<!-- end of auto-generated comment: short summary by @tms-phuongvo -->`
 
 export const COMMIT_ID_START_TAG = '<!-- commit_ids_reviewed_start -->'
 export const COMMIT_ID_END_TAG = '<!-- commit_ids_reviewed_end -->'

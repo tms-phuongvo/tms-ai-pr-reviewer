@@ -4,6 +4,7 @@ export interface Ids {
   conversationId?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface IBot {
-  chat: (message: string, ids: Ids) => Promise<[string, Ids]>
+  chat: (message: string) => Promise<[string, Ids]>
 }
