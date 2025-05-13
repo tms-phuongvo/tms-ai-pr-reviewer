@@ -337,7 +337,7 @@ ${
 
     // summarize content
     try {
-      const [summarizeResp] = await lightBot.chat(summarizePrompt, {})
+      const [summarizeResp] = await lightBot.chat(summarizePrompt)
 
       if (summarizeResp === '') {
         info('summarize: nothing obtained from openai')
@@ -401,8 +401,7 @@ ${filename}: ${summary}
       }
       // ask chatgpt to summarize the summaries
       const [summarizeResp] = await heavyBot.chat(
-        prompts.renderSummarizeChangesets(inputs),
-        {}
+        prompts.renderSummarizeChangesets(inputs)
       )
       if (summarizeResp === '') {
         warning('summarize: nothing obtained from openai')
@@ -414,8 +413,7 @@ ${filename}: ${summary}
 
   // final summary
   const [summarizeFinalResponse] = await heavyBot.chat(
-    prompts.renderSummarize(inputs),
-    {}
+    prompts.renderSummarize(inputs)
   )
   if (summarizeFinalResponse === '') {
     info('summarize: nothing obtained from openai')
@@ -424,13 +422,12 @@ ${filename}: ${summary}
   if (options.disableReleaseNotes === false) {
     // final release notes
     const [releaseNotesResponse] = await heavyBot.chat(
-      prompts.renderSummarizeReleaseNotes(inputs),
-      {}
+      prompts.renderSummarizeReleaseNotes(inputs)
     )
     if (releaseNotesResponse === '') {
       info('release notes: nothing obtained from openai')
     } else {
-      let message = '### Summary by TMS Bot\n\n'
+      let message = '### Summary by @tms-phuongvo\n\n'
       message += releaseNotesResponse
       try {
         await commenter.updateDescription(
@@ -445,8 +442,7 @@ ${filename}: ${summary}
 
   // generate a short summary as well
   const [summarizeShortResponse] = await heavyBot.chat(
-    prompts.renderSummarizeShort(inputs),
-    {}
+    prompts.renderSummarizeShort(inputs)
   )
   inputs.shortSummary = summarizeShortResponse
 
@@ -609,8 +605,7 @@ ${commentChain}
         // perform review
         try {
           const [response] = await heavyBot.chat(
-            prompts.renderReviewFileDiff(ins),
-            {}
+            prompts.renderReviewFileDiff(ins)
           )
           if (response === '') {
             info('review: nothing obtained from openai')
@@ -712,7 +707,7 @@ ${
 <details>
 <summary>Tips</summary>
 
-### Chat with <img src="https://avatars.githubusercontent.com/u/59599672?v=4" alt="Image description" width="20" height="20">  TMS Bot (\`@tms-phuongvo\`)
+### Chat with <img src="https://avatars.githubusercontent.com/u/59599672?s=96&v=4" alt="Image description" width="20" height="20"> Phuong Vo (\`@tms-phuongvo\`)
 - Reply on review comments left by this bot to ask follow-up questions. A review comment is a comment on a diff or a file.
 - Invite the bot into a review comment chain by tagging \`@tms-phuongvo\` in a reply.
 

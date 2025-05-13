@@ -1,6 +1,11 @@
 import {info} from '@actions/core'
 import {minimatch} from 'minimatch'
-import {OpenAITokenLimits, GeminiTokenLimits, TokenLimits} from './limits'
+import {
+  OpenAITokenLimits,
+  GeminiTokenLimits,
+  AnthropicTokenLimits,
+  TokenLimits
+} from './limits'
 
 export type Mode = 'openai' | 'gemini'
 
@@ -23,7 +28,6 @@ export class Options {
   githubConcurrencyLimit: number
   lightTokenLimits: TokenLimits
   heavyTokenLimits: TokenLimits
-  apiBaseUrl: string
   language: string
 
   constructor(
@@ -43,7 +47,6 @@ export class Options {
     timeoutMS = '120000',
     concurrencyLimit = '6',
     githubConcurrencyLimit = '6',
-    apiBaseUrl = 'https://api.openai.com/v1',
     language = 'en-US'
   ) {
     this.debug = debug
@@ -69,7 +72,6 @@ export class Options {
       this.lightTokenLimits = new GeminiTokenLimits(lightModel)
       this.heavyTokenLimits = new GeminiTokenLimits(heavyModel)
     }
-    this.apiBaseUrl = apiBaseUrl
     this.language = language
   }
 
@@ -92,7 +94,6 @@ export class Options {
     info(`github_concurrency_limit: ${this.githubConcurrencyLimit}`)
     info(`summary_token_limits: ${this.lightTokenLimits.string()}`)
     info(`review_token_limits: ${this.heavyTokenLimits.string()}`)
-    info(`api_base_url: ${this.apiBaseUrl}`)
     info(`language: ${this.language}`)
   }
 
@@ -172,6 +173,23 @@ export class GeminiAIOptions {
   constructor(
     model = 'gemini-1.5-flash',
     tokenLimits: GeminiTokenLimits | null = null
+  ) {
+    this.model = model
+    if (tokenLimits != null) {
+      this.tokenLimits = tokenLimits
+    } else {
+      this.tokenLimits = new GeminiTokenLimits(model)
+    }
+  }
+}
+
+export class AnthropicAIOptions {
+  model: string
+  tokenLimits: GeminiTokenLimits
+
+  constructor(
+    model = 'claude-3-5-sonnet',
+    tokenLimits: AnthropicTokenLimits | null = null
   ) {
     this.model = model
     if (tokenLimits != null) {

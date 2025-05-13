@@ -69,3 +69,33 @@ export class GeminiTokenLimits implements TokenLimits {
     return `max_tokens=${this.maxTokens}, request_tokens=${this.requestTokens}, response_tokens=${this.responseTokens}`
   }
 }
+
+export class AnthropicTokenLimits implements TokenLimits {
+  maxTokens: number
+  requestTokens: number
+  responseTokens: number
+  knowledgeCutOff: string
+
+  constructor(model = 'claude-3-opus-20240229') {
+    this.knowledgeCutOff = '2024-06-20'
+    if (model === 'claude-3-opus-20240229') {
+      this.maxTokens = 200000
+      this.responseTokens = 3000
+    } else if (model === 'claude-3-5-haiku-20241022') {
+      this.maxTokens = 200000
+      this.responseTokens = 3000
+    } else if (model === 'claude-3-5-sonnet-20241022') {
+      this.maxTokens = 200000
+      this.responseTokens = 3000
+    } else {
+      this.maxTokens = 200000
+      this.responseTokens = 1000
+    }
+    // provide some margin for the request tokens
+    this.requestTokens = this.maxTokens - this.responseTokens - 100
+  }
+
+  string(): string {
+    return `max_tokens=${this.maxTokens}, request_tokens=${this.requestTokens}, response_tokens=${this.responseTokens}`
+  }
+}

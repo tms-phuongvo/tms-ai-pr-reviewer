@@ -7,7 +7,8 @@ author: 'Phuong Vo'
 inputs:
   mode:
     required: true
-    description: 'The mode to use for the action "openai" or "gemini"'
+    description:
+      'The mode to use for the action "openai" or "gemini" or "anthropic"'
     default: 'gemini'
   debug:
     required: false
@@ -32,7 +33,6 @@ inputs:
     description: |
       The path filters, e.g., "src/**.py", "!dist/**", each line will be considered as one pattern.
       See also
-
       - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
       - https://github.com/isaacs/minimatch
     default: |
@@ -148,10 +148,6 @@ inputs:
     required: false
     description: 'Disable release notes'
     default: 'false'
-  openai_base_url:
-    required: false
-    description: 'The url of the openai api interface.'
-    default: 'https://api.openai.com/v1'
   light_model:
     required: false
     description:
@@ -168,7 +164,7 @@ inputs:
   retries:
     required: false
     description:
-      'How many times to retry OpenAI API in case of timeouts or errors?'
+      'How many times to retry LLM API in case of timeouts or errors?'
     default: '5'
   timeout_ms:
     required: false
@@ -176,7 +172,7 @@ inputs:
     default: '360000'
   concurrency_limit:
     required: false
-    description: 'How many concurrent API calls to make to LLM servers?'
+    description: 'How many concurrent API calls to make to LLM API?'
     default: '6'
   github_concurrency_limit:
     required: false
@@ -184,9 +180,9 @@ inputs:
     default: '6'
   system_message:
     required: false
-    description: 'System message to be sent to OpenAI'
+    description: 'System message to be sent to LLM API'
     default: |
-      You are `@tms-phuongvo` (aka `github-actions[bot]`), a language model 
+      You are TOMOSIA AI REVIEWER (aka `github-actions[bot]`), a language model 
       trained by OpenAI. Your purpose is to act as a highly experienced 
       software engineer and provide a thorough review of the code hunks
       and suggest code snippets to improve key areas such as:
